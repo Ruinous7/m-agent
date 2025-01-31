@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { supabase } from '@/lib/supabaseClient'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import styles from './login.module.scss'
 
 interface LoginFormState {
@@ -19,18 +20,31 @@ export default function LoginPage() {
     loading: false
   })
   const router = useRouter()
-
+  
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setFormState(prev => ({ ...prev, loading: true, error: undefined }))
-
+  
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: formState.email,
         password: formState.password,
       })
-
+  
       if (error) throw error
+  
+      // ✅ Send session to API for cookie storage
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session: data.session })  
+      })
+  
+      if (!response.ok) {
+        console.error("Failed to sync session with cookies")
+        throw new Error("Failed to sync session with cookies")
+      }
+  
       router.push('/dashboard')
       router.refresh()
     } catch (error) {
@@ -42,6 +56,7 @@ export default function LoginPage() {
       setFormState(prev => ({ ...prev, loading: false }))
     }
   }
+  
 
   return (
     <div className={styles.loginContainer}>
@@ -89,6 +104,11 @@ export default function LoginPage() {
             {formState.loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
+
+        <div className={styles.links}>
+          <Link href="/register">Create an account</Link>
+          <Link href="/forgot-password">Forgot password?</Link>
+        </div>
       </div>
     </div>
   )
