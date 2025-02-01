@@ -5,7 +5,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "./register.module.scss";
-import { supabase } from "@/lib/supabaseClient";
+import { checkEmailStatus } from "@/app/services/profile/profileService";
 
 interface RegisterForm {
   email: string;
@@ -23,38 +23,6 @@ const validatePassword = (password: string): string | null => {
   }
   return null;
 };
-
-interface EmailCheckResult {
-  status: "confirmed" | "unconfirmed" | "new" | "profile_missing";
-}
-async function checkEmailStatus(email: string): Promise<EmailCheckResult> {
-  // Call the RPC function to get user ID & confirmation status
-  const { data, error } = await supabase.rpc("get_user_status_by_email", { email });
-
-  if (error) {
-    console.error("Error checking user:", error);
-    return { status: "new" }; // Assume new if there's an error
-  }
-
-  if (data?.length > 0) {
-    const user = data[0]; // RPC returns an array, take the first element
-
-    if (user.confirmed_at) {
-      // Email is confirmed, check if profile exists
-      const { data: profileData } = await supabase
-        .from("profiles")
-        .select("id")
-        .eq("user_id", user.id) 
-        .single();
-
-      return profileData ? { status: "confirmed" } : { status: "profile_missing" };
-    } else {
-      return { status: "unconfirmed" }; // Email is unconfirmed
-    }
-  }
-
-  return { status: "new" }; // If no user is found
-}
 
 export default function Register() {
   const router = useRouter();
@@ -115,7 +83,6 @@ export default function Register() {
         return;
       }
 
-      
       if (emailStatus.status === "profile_missing") {
         setError("This email is already registered and confirmed. please login.");
         setFormData({ email: "", password: "", name: "" });
