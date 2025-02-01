@@ -15,7 +15,7 @@ export default function CheckEmail() {
 
     const handleResendEmail = async () => {
         setResendStatus({ loading: true });
-        
+    
         // Get email from localStorage
         const savedData = localStorage.getItem('registrationData');
         if (!savedData) {
@@ -25,20 +25,21 @@ export default function CheckEmail() {
             });
             return;
         }
-
+    
         const { email } = JSON.parse(savedData);
-        
+    
         try {
-            const { error } = await supabase.auth.resend({
-                type: 'signup',
+            // ✅ Use `signInWithOtp` instead of `resend`
+            const { error } = await supabase.auth.signInWithOtp({
                 email,
                 options: {
+                    shouldCreateUser: false, // Only resend confirmation, don't create a new user
                     emailRedirectTo: `${window.location.origin}/auth/callback`,
                 }
             });
-
+    
             if (error) throw error;
-
+    
             setResendStatus({
                 loading: false,
                 success: 'Confirmation email resent successfully!'
@@ -50,6 +51,7 @@ export default function CheckEmail() {
             });
         }
     };
+    
 
     return (
         <div className={styles.container}>

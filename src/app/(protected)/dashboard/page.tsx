@@ -8,6 +8,8 @@ export default function Dashboard() {
   if (!session) {
     return <div>Loading...</div>
   }
+
+  console.log('dashboard session', session)
   
   return (
     <div>
