@@ -4,12 +4,12 @@ import '@/styles/global.scss'
 
 const rubik = Rubik({
   subsets: ["latin"],
-  weight: ['400', '500', '600', '700'],  // Include the weights you need
+  weight: ['400', '500', '600', '700'],
   variable: '--font-rubik',
 });
 
 export const metadata: Metadata = {
-  title: "m-agent-prototype",
+  title: "M-AGENT",
   description: "m-agent prototpye build",
 };
 

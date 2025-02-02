@@ -7,8 +7,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className={styles.authContainer}>
-      <div className={styles.formContainer}>{children}</div>
-    </div>
+      <div className={`container ${styles.authContainer}`}>{children}</div>
   );
+
 }

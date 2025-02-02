@@ -99,14 +99,14 @@ export default function ForgotPassword() {
                 className={styles.submitButton}
               >
                 {loading ? "Sending..." : "Send Reset Link"}
-              </button><br/>
-
-              <div className={styles.links}>
-                <Link href="/login">Back to Login</Link>
-              </div>
+              </button>
+              <br />
             </Fragment>
           )}
         </form>
+        <div className={styles.links}>
+          <Link href="/login">Back to Login</Link>
+        </div>
       </div>
     </Fragment>
   );

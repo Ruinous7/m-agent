@@ -165,10 +165,10 @@ export default function Register() {
         >
           {loading ? "Creating Account..." : "Create Account"}
         </button><br/>
-        <div className={styles.links}>
+      </form>
+      <div className={styles.links}>
           Already have an account? <Link href="/login">Login</Link>
         </div>
-      </form>
     </Fragment>
   );
 }

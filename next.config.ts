@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 
 const nextConfig: NextConfig = {
   async headers() {
@@ -12,7 +13,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Access-Control-Allow-Origin",
-            value: "*",
+            value: supabaseUrl,
           },
           {
             key: "Access-Control-Allow-Methods",

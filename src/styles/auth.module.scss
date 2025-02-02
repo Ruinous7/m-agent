@@ -1,14 +1,6 @@
 .authContainer {
-  display: flex;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-background);
-  color: var(--color-text);
-}
-
-.formContainer {
   width: 100%;
+  min-width: 300px;
   max-width: 400px;
   padding: 2rem;
   background: var(--color-surface);
@@ -20,30 +12,41 @@
     margin-bottom: 2rem;
     color: var(--color-primary-contrast);
   }
-}
 
-.formGroup {
-  margin-bottom: 1rem;
-
-  input {
+  form{
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--color-surface);
-    border-radius: 4px;
-    font-size: 1rem;
-    background-color: var(--color-background);
-    color: var(--color-text);
 
-    &:focus {
-      outline: none;
-      border-color: var(--color-primary);
+    .formGroup {
+      margin-bottom: 1rem;
+    
+      input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--color-surface);
+        border-radius: 4px;
+        font-size: 1rem;
+        background-color: var(--color-background);
+        color: var(--color-text);
+        box-sizing: border-box;
+        
+        &:focus {
+          outline: none;
+          border-color: var(--color-primary);
+        }
+    
+        &::placeholder {
+          color: rgba(226, 226, 226, 0.5);
+        }
+      }
     }
-
-    &::placeholder {
-      color: rgba(226, 226, 226, 0.5);
-    }
+    
+  
   }
 }
+
 
 .errorMessage {
   background-color: rgba(
