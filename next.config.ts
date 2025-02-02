@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "/(.*)", // Apply headers globally
+        source: "/(.*)",
         headers: [
           {
             key: "Access-Control-Allow-Credentials",
@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Access-Control-Allow-Origin",
-            value: "*", // Change this to your Supabase URL if needed
+            value: "*",
           },
           {
             key: "Access-Control-Allow-Methods",

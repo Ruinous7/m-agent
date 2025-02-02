@@ -1,4 +1,4 @@
-import { createProfile } from '@/app/services/profile/profileService';
+import { createProfile } from '@/services/profile/profileService';
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
 
     if (!code) {
       console.error('❌ No code found in URL');
-      return NextResponse.redirect(`${requestUrl.origin}/auth-error`);
+      return NextResponse.redirect(`${requestUrl.origin}/auth/error`);
     }
 
     const cookieStore = cookies();
@@ -29,12 +29,12 @@ export async function GET(request: Request) {
 
     if (error) {
       console.error('❌ Session exchange error:', error);
-      return NextResponse.redirect(`${requestUrl.origin}/auth-error`);
+      return NextResponse.redirect(`${requestUrl.origin}/auth/error`);
     }
 
     if (data.user) {
       const profileResponse = await createProfile(data.user, supabase);
-
+      
       switch (profileResponse.status) {
         case 'profile_created':
         case 'profile_exists':
@@ -42,13 +42,13 @@ export async function GET(request: Request) {
         case 'profile_creation_failed':
         case 'unexpected_error':
           console.error("⚠️ Profile creation failed:", profileResponse.error);
-          return NextResponse.redirect(`${requestUrl.origin}/auth-error?error=profile_creation_failed`);
+          return NextResponse.redirect(`${requestUrl.origin}/auth/error?error=profile_creation_failed`);
       }
     }
 
     return NextResponse.redirect(`${requestUrl.origin}${next}`);
   } catch (error) {
     console.error('❌ Fatal error in callback route:', error);
-    return NextResponse.redirect(`${requestUrl.origin}/auth-error`);
+    return NextResponse.redirect(`${requestUrl.origin}/auth/error`);
   }
 }

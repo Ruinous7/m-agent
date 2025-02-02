@@ -1,4 +1,4 @@
-.loginContainer {
+.authContainer {
   display: flex;
   height: 100vh;
   align-items: center;
@@ -7,7 +7,7 @@
   color: var(--color-text);
 }
 
-.loginBox {
+.formContainer {
   width: 100%;
   max-width: 400px;
   padding: 2rem;

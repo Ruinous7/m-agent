@@ -12,11 +12,13 @@ export async function middleware(req: NextRequest) {
 
   // If user is not signed in and the current path is in the protected directory
   if (!session && req.nextUrl.pathname.startsWith('/dashboard')) {
+    console.log('User is not signed in and trying to access dashboard')
     return NextResponse.redirect(new URL('/login', req.url))
   }
 
   // If user is signed in and trying to access login page, redirect to dashboard
   if (session && req.nextUrl.pathname === '/login') {
+    console.log('User is signed in and trying to access login page')
     return NextResponse.redirect(new URL('/dashboard', req.url))
   }
 

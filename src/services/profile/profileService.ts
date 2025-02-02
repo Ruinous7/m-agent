@@ -1,13 +1,6 @@
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/lib/supabase/supabaseClient";
+import { Profile } from "@/lib/utils/types/profile";
 import { SupabaseClient, User } from "@supabase/supabase-js";
-
-interface ProfileData {
-  id: string;
-  email: string | undefined;
-  name: string;
-  role: "user" | "support" | "admin";
-  created_at: string;
-}
 
 export async function createProfile(user: User, supabase: SupabaseClient): Promise<{ status: string; error?: string }> {
   try {
@@ -28,13 +21,13 @@ export async function createProfile(user: User, supabase: SupabaseClient): Promi
     }
 
 
-    const profileData: ProfileData = {
+    const profileData: Profile = {
       id: user.id,
-      email: user.email,
-      name: user.user_metadata.name || "",
+      first_name: null,
+      last_name: null,
       role: "user",
-      created_at: new Date().toISOString(),
     };
+
 
     // ✅ Use the server-authenticated Supabase client for the insert
     const { error: profileError } = await supabase.from("profiles").insert(profileData);

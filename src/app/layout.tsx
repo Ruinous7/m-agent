@@ -9,7 +9,7 @@ const rubik = Rubik({
 });
 
 export const metadata: Metadata = {
-  title: "M-AGENT",
+  title: "m-agent-prototype",
   description: "m-agent prototpye build",
 };
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useSession } from '@/lib/session'
+import { useSession } from '@/lib/utils/contexts/session'
 
 export default function Dashboard() {
   const session = useSession()

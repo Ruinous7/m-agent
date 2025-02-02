@@ -1,4 +1,4 @@
-import { createProfile } from '@/app/services/profile/profileService';
+import { createProfile } from '@/services/profile/profileService';
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server'

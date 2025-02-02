@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/lib/supabase/supabaseClient";
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "../register/register.module.scss";
 
